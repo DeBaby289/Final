@@ -13,6 +13,9 @@
 			LayerH layerh = new LayerH(3,1100);
 			Sun sky = new Sun();
 			Elephant elly = new Elephant(0,1050,1,1);
+			//Peanut p = new Peanut(300, 700,0.5,100,100 );
+			
+			PeanutLayer pl = new PeanutLayer(0.5,500);
 			
 	
 			void setup(){
@@ -46,7 +49,11 @@
 				
 				//layer of elephant
 				elly.drawElephant();
-			
+				//p.drawPeanut();
+				//p.movePeanut();
+				
+				pl.drawpeanutlayer();
+				pl.movepeanutlayer();
 				
 				
 			}
@@ -410,6 +417,122 @@
 					}
 			
 				}
+				
+				
+				class Peanut{
+				//attributes 
+				var x;
+				var y;
+				//var disappear;
+				//var appear;
+				var spdX;
+				var width;
+				var height;
+				//var spdY;
+				//var start;
+				//var stop;
+				
+				//constructor
+				Peanut(xPos, yPos,sX,w,h ){
+					x = xPos; 
+					y = yPos; 
+					//disappear = dis;
+					//appear = ap;
+					spdX = sX; 
+					width = w;
+					height= h;
+					//spdY = sY; 
+					//start = str;
+					//stop = stp;
+				}
+				void movePeanut(){
+					x = x - spdX;
+					
+				}
+					
+				//methods
+				void drawPeanut()
+				{    
+					//Peanut
+					fill(0,0,255);
+					noStroke();
+					
+					ellipse(x,y,width,height);
+					ellipse(x,y,width,height);
+					ellipse(x,y,width,height);
+					
+
+				}
+			}
+			
+			class PeanutLayer
+			{
+				//attributes
+				var speed;
+				var height;
+				var peanut;
+				//var x;
+				//var y;
+				var width;
+				var xLoc;
+				
+				//constructor
+				PeanutLayer(s,h)
+				{ 
+					//x = xPos;
+					//y = yPos;
+					speed = s;
+					width = 0;
+					height = h;
+					peanut = [];
+					xLoc = width;
+					
+					while(width <=1200) {
+						var nutW = random(50,100);
+						console.log("nut");
+						var nutH = 450;
+						console.log("nutty");
+						peanut.push(new Peanut(xLoc,300,0.5,nutW,nutH));
+						console.log(peanut.length);
+						width = width + nutW;
+						xLoc = width;
+						}
+				}
+				
+				//methods
+				void drawpeanutlayer()
+				{
+					for(var i=0;i<peanut.length;i++)
+					{
+						peanut[i].drawPeanut();
+					}
+					
+				}
+				
+				void movepeanutlayer()
+				{
+					for(var count=0;count<peanut.length;count++)
+					{
+						console.log("Hey");
+						peanut[count].movePeanut();
+					}
+					width = width - speed;
+					
+					if(width<1200)
+					{
+						console.log("Hey");
+						var nut = random(50,100); // nut's width 
+						var nutty = random(height-90,height+90); // nut's height
+						peanut.push(new Peanut(xLoc,300,speed,nut,nutty));
+						width = width + nut;
+						xLoc = width;
+						
+					}
+					
+				}
+				
+				
+			}
 					
 					
 
