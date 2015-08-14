@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 	
 <!-- saved from url=(0064)C:\Users\devine\Desktop\Final\ZionJenniCityScroller (1)_files\processing-1.4.1.js -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
@@ -60,10 +61,68 @@
 					//constructor
 					Clouds(xPos, yPos, width, height,color)
 					{
+=======
+<!-- saved from url=(0064)C:\Users\devine\Desktop\Final\ZionJenniCityScroller (1)_files\processing-1.4.1.js -->
+<html>
+	<head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+			<script src="processing-1.4.1.js"></script>
+			<script type="text/processing" data-processing-target="mycanvas">
+			
+			//back layer
+			Layer layer1 = new Layer(0.5,200);
+			Grass forest = new Grass();
+			
+			//Layer layer3 = new Layer(1.5,500);
+			
+	
+			void setup(){
+				size(1200,1200);
+				//nut = new Peanut(100,100,1,1)
+				background(125);
+				fill(255);
+				PFont fontA = loadFont("courier");
+				textFont(fontA, 14);  
+				noStroke();
+			}
+					
+					
+			void draw(){
+				background(126,192,238);
+				fill(82, 41, 0);
+				noStroke();
+				//tree.drawTree();
+				//tree2.drawTree();
+				//tree3.drawTree();
+				layer1.drawLayer();
+				layer1.moveLayer();
+				forest.drawGrass();
+				//Peanut.drawPeanut();
+				//eanut.movePeanut();
+				//layer3.drawLayer();
+				//layer3.moveLayer();
+				//grass.drawGrass();
+			}
+				
+			
+			
+			class Tree {
+				//attributes
+				var x;
+				var y;
+				var w;
+				var h;
+				var s;
+				
+				
+				//constructor
+				Tree(xPos,yPos,speed,width,height)
+				{
+>>>>>>> origin/master
 					x = xPos;
 					y = yPos;
 					w = width;
 					h = height;
+<<<<<<< HEAD
 					c = color;
 					//clouds = [];
 					//s = speed;
@@ -245,11 +304,244 @@
 				
 					
 </script>
+=======
+					s = speed;
+
+				
+				}
+				
+				//methods
+				void drawTree(){
+					
+					fill(61,31,0);
+					rect(x+100,y-150,90, 400);
+					fill(34,139,34);
+					//ellipse(x+150,x-50,90,90);
+					ellipse(x+100,y-50,90,90);
+					ellipse(x+80,y-80,90,90);
+					ellipse(x+200,y-200,90,90);
+					ellipse(x+100,y-150,90,90);
+					ellipse(x+150,y-100,90,90);
+					ellipse(x+200,y-150,90,90);
+					ellipse(x+200,y-100,90,90);
+					ellipse(x+100,y-200,90,90);
+					ellipse(x+150,y-80,90,90);
+					ellipse(x+150,y-100,90,90);
+					ellipse(x+150,y-200,90,90);
+					ellipse(x+200,y-90,90,90);
+					ellipse(x+100,y-90,90,90);
+					ellipse(x+150,y-150,90,90);
+					//apples
+					fill(255,0,0);
+					ellipse(x+100,y-100,40,40);
+					ellipse(x+100,y-200, 40, 40);
+					ellipse(x+150,y-90,40,40);
+					ellipse(x+200,y-150, 40, 40);
+					ellipse(x+150,y-150, 40, 40);
+					//tree trunk
+					fill(37,19,0);
+					ellipse(x+150,y-5, 40, 40);
+					fill(153,102,51);
+					ellipse(x+150,y-5,15,15);	
+					//oranges
+					fill(255,153,51);
+					ellipse(x+200,y-200,40,40);
+					ellipse(x+100,y-100,40,40);
+					ellipse(x+200,y-90,40,40);
+					
+					
+				
+				}
+				
+			void moveTree(){
+				x = x - s;
+			}
+			
+			
+			}
+			class MovePeanut{
+				//attributes
+				var speed;
+				var height;
+				var x;
+				var y;   
+				
+				//constructor
+				speed = s;
+				height= h;
+				x = xPos;
+				y = yPos;
+				
+				//methods
+				
+				
+			}
+			
+			class Layer {
+				//attributes
+				
+				var s;
+				var h;
+				var trees;
+				//var peanut;
+				var width;
+				
+				//constructor
+				Layer(speed,height)
+				{
+				
+					speed = s;
+					height = h;
+					trees =[];
+					//peanut =[];
+					width = 0;
+					
+					while(width <=1200) {
+						var twidth = random(100,400);
+						console.log(twidth);
+						var theight = 200;
+						console.log(theight);
+						trees.push(new Tree(random(50,500),1200-theight,0.5,twidth,theight));
+						console.log(trees.length);
+						width = width + twidth;
+						var randomW = random(100,1000);
+						if(width== randomW){
+							Peanut peanut = new Peanut(randomW,750,.5,50,50);
+							peanut.drawPeanut();
+							
+						}
+					}
+					/*while(width <=1200) {
+						var nut = random(50,100);
+						console.log(nut);
+						var nutty = 750;
+						console.log(nutty);
+						peanut.push(new Peanut(random(50,200),1200-nutty,0.5,nut,nutty));
+						console.log(peanut.length);
+						width = width + nut;
+					}*/
+				}
+				
+				//methods
+				void drawLayer(){
+					for(var i=0;i<trees.length;i++)
+					{
+						//console.log("i");
+						trees[i].drawTree();
+					}
+				}
+				void drawPeanut(){
+					for(var i=0; i<peanut.length;i++)
+					{
+						//console.log("i");
+						peanut[i].drawPeanut();
+					}
+					
+				}
+				
+				void moveLayer(){
+					for (var count=0;count<trees.length;count++)
+						{
+							console.log("Ho");
+							trees[count].moveTree();
+						}
+						width = width - s;
+						if(width<1200){
+							console.log("Hi");
+							var twidth = random(50,100);
+							var theight = random(h-90,h+90);
+							trees.push(new Tree(width,1200-theight,s,twidth,theight));
+							width = width + twidth;
+						}
+					}
+					void movePeanut(){
+						for(var count=0;count<peanuts.length;count++)
+						{
+							console.log("Deez");
+							peanuts[count].movePeanut();
+						}
+						width = width - s;
+						if(width<1200){
+							console.log("Nuts"); 
+							var nut = random(50,100);
+							var nutty = random(h-90,h+90)
+							peanut.push(new Peanut(width,1200-nut,s,nutty,nut);
+							width = width + nutty;
+							
+						}
+					}
+			}
+				class Grass{
+				
+					//constructor - empty
+					Grass(){
+					
+					}
+					//draw dirt
+					 void drawGrass(){
+						fill(131,151,13);
+						rect(0,1100,1200,100);
+					 
+					 }
+
+						
+				
+				}
+			class Peanut{
+				//attributes 
+				var x;
+				var y;
+				//var disappear;
+				//var appear;
+				var spdX;
+				var width;
+				var height;
+				//var spdY;
+				//var start;
+				//var stop;
+				
+				//constructor
+				Peanut(xPos, yPos,sX,w,h ){
+					x = xPos; 
+					y = yPos; 
+					//disappear = dis;
+					//appear = ap;
+					spdX = sX; 
+					width = w;
+					height= h;
+					//spdY = sY; 
+					//start = str;
+					//stop = stp;
+				}
+					
+				//methods
+				void drawPeanut()
+				{    
+					//Peanut
+					fill(0,0,255);
+					noStroke();
+					
+					ellipse(x,y,w,h);
+					ellipse(x,y,w,h);
+					ellipse(x,y,w,h);
+					
+
+				}
+			}
+	
+		
+		</script>
+>>>>>>> origin/master
 	<style type="text/css">@font-face {
   font-family: "PjsEmptyFont";
   src: url('data:application/x-font-ttf;base64,AAEAAAAKAIAAAwAgT1MvMgAAAAAAAAEoAAAAVmNtYXAAAAAAAAABiAAAACxnbHlmAAAAAAAAAbwAAAAkaGVhZAAAAAAAAACsAAAAOGhoZWEAAAAAAAAA5AAAACRobXR4AAAAAAAAAYAAAAAGbG9jYQAAAAAAAAG0AAAABm1heHAAAAAAAAABCAAAACBuYW1lAAAAAAAAAeAAAAAgcG9zdAAAAAAAAAIAAAAAEAABAAAAAQAAAkgTY18PPPUACwAgAAAAALSRooAAAAAAyld0xgAAAAAAAQABAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEAAAACAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAIwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAMAAQAAAAwABAAgAAAABAAEAAEAAABB//8AAABB////wAABAAAAAAAAAAgAEgAAAAEAAAAAAAAAAAAAAAAxAAABAAAAAAABAAEAAQAAMTcBAQAAAAAAAgAeAAMAAQQJAAEAAAAAAAMAAQQJAAIAAgAAAAAAAQAAAAAAAAAAAAAAAAAA')
        format('truetype');
+<<<<<<< HEAD
 }</style></head>
+=======
+}
+</style></head>
+>>>>>>> origin/master
 	<body>
 		<canvas id="mycanvas" tabindex="0" width="500" height="600" style="image-rendering: -webkit-optimize-contrast !important;"></canvas>
 	
