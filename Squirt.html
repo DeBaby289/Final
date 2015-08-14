@@ -1,75 +1,24 @@
-<!DOCTYPE html>
+<!-- saved from url=(0064)C:\Users\devine\Desktop\Final\ZionJenniCityScroller (1)_files\processing-1.4.1.js -->
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<script src="processing-1.4.1.js"></script>
-<script type="text/processing" data-processing-target="mycanvas">
-Peanut nut;
-	void setup(){
-		nut = new Peanut(100, 100,1,1);
-		size(500, 450);
-		background(252, 255, 214);
-		noStroke();
-		fill(102);
-	}
-	void draw(){
-
-	nut.drawPeanut();
-	
-	} 
-	class Peanut{
-		//attributes 
-		var x;
-		var y;
-		//var disappear;
-		//var appear;
-		var spdX;
-		var spdY;
-		//var start;
-		//var stop;
-		
-		//constructor
-		Peanut(xPos, yPos,sX,sY ){
-			x = xPos; 
-			y = yPos; 
-			//disappear = dis;
-			//appear = ap;
-			spdX = sX; 
-			spdY = sY; 
-			//start = str;
-			//stop = stp;
-		}
+	<head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+			<script src="processing-1.4.1.js"></script>
+			<script type="text/processing" data-processing-target="mycanvas">
 			
-		//methods
-		void drawPeanut()
-		{    
-			//Peanut
-			fill(0,0,255);
-			noStroke();
-			
-			ellipse(220,146,100,100);
-			ellipse(221,203,50,50);
-			ellipse(222,231,100,100);
-			
-
-		}
-	}
-
-	
-			//Back  = new Peanut;
+			//back layer
 			Layer layer1 = new Layer(0.5,200);
 			Grass forest = new Grass();
-			Back layer2 = new Peanut(1,300);
+			
 			//Layer layer3 = new Layer(1.5,500);
 			
 	
 			void setup(){
 				size(1200,1200);
+				//nut = new Peanut(100,100,1,1)
 				background(125);
 				fill(255);
 				PFont fontA = loadFont("courier");
 				textFont(fontA, 14);  
-					
+				noStroke();
 			}
 					
 					
@@ -83,14 +32,15 @@ Peanut nut;
 				layer1.drawLayer();
 				layer1.moveLayer();
 				forest.drawGrass();
-				layer2.drawPeanut();
-				layer2.movePeanut();
+				//Peanut.drawPeanut();
+				//eanut.movePeanut();
 				//layer3.drawLayer();
 				//layer3.moveLayer();
 				//grass.drawGrass();
 			}
-
-		
+				
+			
+			
 			class Tree {
 				//attributes
 				var x;
@@ -98,6 +48,7 @@ Peanut nut;
 				var w;
 				var h;
 				var s;
+				
 				
 				//constructor
 				Tree(xPos,yPos,speed,width,height)
@@ -150,6 +101,7 @@ Peanut nut;
 					ellipse(x+100,y-100,40,40);
 					ellipse(x+200,y-90,40,40);
 					
+					
 				
 				}
 				
@@ -159,6 +111,23 @@ Peanut nut;
 			
 			
 			}
+			class MovePeanut{
+				//attributes
+				var speed;
+				var height;
+				var x;
+				var y;   
+				
+				//constructor
+				speed = s;
+				height= h;
+				x = xPos;
+				y = yPos;
+				
+				//methods
+				
+				
+			}
 			
 			class Layer {
 				//attributes
@@ -166,15 +135,17 @@ Peanut nut;
 				var s;
 				var h;
 				var trees;
+				//var peanut;
 				var width;
 				
 				//constructor
 				Layer(speed,height)
 				{
 				
-					s = speed;
-					h = height;
+					speed = s;
+					height = h;
 					trees =[];
+					//peanut =[];
 					width = 0;
 					
 					while(width <=1200) {
@@ -185,9 +156,22 @@ Peanut nut;
 						trees.push(new Tree(random(50,500),1200-theight,0.5,twidth,theight));
 						console.log(trees.length);
 						width = width + twidth;
-
-					
+						var randomW = random(100,1000);
+						if(width== randomW){
+							Peanut peanut = new Peanut(randomW,750,.5,50,50);
+							peanut.drawPeanut();
+							
+						}
 					}
+					/*while(width <=1200) {
+						var nut = random(50,100);
+						console.log(nut);
+						var nutty = 750;
+						console.log(nutty);
+						peanut.push(new Peanut(random(50,200),1200-nutty,0.5,nut,nutty));
+						console.log(peanut.length);
+						width = width + nut;
+					}*/
 				}
 				
 				//methods
@@ -197,6 +181,14 @@ Peanut nut;
 						//console.log("i");
 						trees[i].drawTree();
 					}
+				}
+				void drawPeanut(){
+					for(var i=0; i<peanut.length;i++)
+					{
+						//console.log("i");
+						peanut[i].drawPeanut();
+					}
+					
 				}
 				
 				void moveLayer(){
@@ -212,6 +204,22 @@ Peanut nut;
 							var theight = random(h-90,h+90);
 							trees.push(new Tree(width,1200-theight,s,twidth,theight));
 							width = width + twidth;
+						}
+					}
+					void movePeanut(){
+						for(var count=0;count<peanuts.length;count++)
+						{
+							console.log("Deez");
+							peanuts[count].movePeanut();
+						}
+						width = width - s;
+						if(width<1200){
+							console.log("Nuts"); 
+							var nut = random(50,100);
+							var nutty = random(h-90,h+90)
+							peanut.push(new Peanut(width,1200-nut,s,nutty,nut);
+							width = width + nutty;
+							
 						}
 					}
 			}
@@ -230,13 +238,49 @@ Peanut nut;
 
 						
 				
-				
 				}
-		
+			class Peanut{
+				//attributes 
+				var x;
+				var y;
+				//var disappear;
+				//var appear;
+				var spdX;
+				var width;
+				var height;
+				//var spdY;
+				//var start;
+				//var stop;
 				
-			
-			
-			
+				//constructor
+				Peanut(xPos, yPos,sX,w,h ){
+					x = xPos; 
+					y = yPos; 
+					//disappear = dis;
+					//appear = ap;
+					spdX = sX; 
+					width = w;
+					height= h;
+					//spdY = sY; 
+					//start = str;
+					//stop = stp;
+				}
+					
+				//methods
+				void drawPeanut()
+				{    
+					//Peanut
+					fill(0,0,255);
+					noStroke();
+					
+					ellipse(x,y,w,h);
+					ellipse(x,y,w,h);
+					ellipse(x,y,w,h);
+					
+
+				}
+			}
+	
 		
 		</script>
 	<style type="text/css">@font-face {
@@ -244,64 +288,8 @@ Peanut nut;
   src: url('data:application/x-font-ttf;base64,AAEAAAAKAIAAAwAgT1MvMgAAAAAAAAEoAAAAVmNtYXAAAAAAAAABiAAAACxnbHlmAAAAAAAAAbwAAAAkaGVhZAAAAAAAAACsAAAAOGhoZWEAAAAAAAAA5AAAACRobXR4AAAAAAAAAYAAAAAGbG9jYQAAAAAAAAG0AAAABm1heHAAAAAAAAABCAAAACBuYW1lAAAAAAAAAeAAAAAgcG9zdAAAAAAAAAIAAAAAEAABAAAAAQAAAkgTY18PPPUACwAgAAAAALSRooAAAAAAyld0xgAAAAAAAQABAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEAAAACAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAIwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAMAAQAAAAwABAAgAAAABAAEAAEAAABB//8AAABB////wAABAAAAAAAAAAgAEgAAAAEAAAAAAAAAAAAAAAAxAAABAAAAAAABAAEAAQAAMTcBAQAAAAAAAgAeAAMAAQQJAAEAAAAAAAMAAQQJAAIAAgAAAAAAAQAAAAAAAAAAAAAAAAAA')
        format('truetype');
 }
-</script>
-<style>
-	body {background-color:#C030FF}
-	h1   {color:#000000}
-	p    {color:#000000}
-	h1 {
-		text-decoration: none;
-		margin-left:700px
-	}
-	p.serif {
-		font-family: "Times New Roman", Times, serif;
-	}
-
-	p.sansserif {
-		font-family: Arial, Helvetica, sans-serif;
-	}
-	div.img {
-		margin: 5px;
-		padding: 5px;
-		border: 1px solid #0000ff;
-		height: auto;
-		width: auto;
-		float: left;
-		text-align: center;
-	}
-
-	div.img img {
-		display: inline;
-		margin: 5px;
-		border: 1px solid #ffffff;
-	}
-
-	div.img a:hover img {
-		border:1px solid #0000ff;
-	}
-
-	div.desc {
-		text-align: center;
-		font-weight: normal;
-		width: 120px;
-		margin: 5px;
-	}
-</style>
-</head>
-<body>
-
-<h1>Animal Rescue</h1>
-<p style="font-size:150%">Welcome to our Animal Rescue. We hope you have fun and rescue the poor animals ^_^</p>
-<title>Animal Rescue Game Zone</title>
-<canvas id="mycanvas" tabindex="0" width="500" height="500" style="image-rendering: -webkit-optimize-contrast !important;"></canvas>
+</style></head>
+	<body>
+		<canvas id="mycanvas" tabindex="0" width="500" height="600" style="image-rendering: -webkit-optimize-contrast !important;"></canvas>
 	
-<span style="position: absolute; top: 0px; left: 0px; opacity: 0; font-family: PjsEmptyFont, fantasy;">AAAAAAAA</span>
-
-<audio controls autoplay>
-  <source src="C:\Users\devine\Music\Love Tonight.mp4" type="audio/mp4">
-
-</audio>
-
-
-</body>
-</html>
+<span style="position: absolute; top: 0px; left: 0px; opacity: 0; font-family: PjsEmptyFont, fantasy;">AAAAAAAA</span></body></html>
