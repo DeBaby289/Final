@@ -1,40 +1,33 @@
 
-<!-- saved from url=(0064)C:\Users\devine\Desktop\Final\ZionJenniCityScroller (1)_files\processing-1.4.1.js -->
+<!-- saved from url=(0064)file:///C:/Users/zion/Downloads/ZionJenniCityScroller%20(1).html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-			<script src="processing-1.4.1.js"></script>
+			<script src="./ZionJenniCityScroller (1)_files/processing-1.4.1.js"></script>
 			<script type="text/processing" data-processing-target="mycanvas">
 				FoodLayer foodlayer;
 				void setup()
 				{
-					size(500,600);
-					background(0);
-					fill(0);
-
-				
-				 
+				  size(500,600);
+				  background(150,200,180);
+				  fill(255,100,100);
 				 
 				  //noLoop();
 				 
 				  
 				  //back layer
-				  layer1 = new Layer(.3,350,61,31,0);
+				  layer1 = new Layer(.2,350,20,20,20);
 				  //front layer
-				  layer2 = new Layer(4,150,82,41,0);
+				  layer2 = new Layer(4,150,10,40,35);
 				  //middle layer
-				  layer3 = new Layer(1.5,230,71,36,0);
+				  layer3 = new Layer(1.5,230,0,0,0);
 				  //nightSky = new Stars(random(3,498),random(5,200),8,8,[255,215,0],0)
 				  nightsky = new StarLayer();
 				  beep = new Cat(250,585,30,12);
 				  //cat = new catFood(500,420,30,30);
 				  foodlayer = new FoodLayer();
-				  yarnLayer = new YarnLayer();
-				  hi = new Man(400,400,3,-10);
-				  Manlayer = new Manlayer();
-				  
 				 
 				}
 				void draw(){
-					background(0);
+					background(0,0,0);
 					//nightSky.drawStars();
 					nightsky.drawStar();
 					layer1.drawLayer();
@@ -44,15 +37,9 @@
 					layer2.drawLayer();
 					layer2.moveLayer();
 					beep.drawCat();
-					hi.drawMan();
 					//cat.drawcatFood();
 					//cat.Move();
-
 					
-					Manlayer.drawLayer();
-					Manlayer.moveLayer();
-					yarnLayer.drawLayer();
-					yarnLayer.moveLayer();
 					foodlayer.drawLayer();
 					foodlayer.moveLayer();
 					if(keyPressed==true){
@@ -71,19 +58,11 @@
 						if (beep.y<590){
 							console.log("down");
 							beep.fall();
-						}
+							}
 					}
 							
 				}
 				
-
-					
-
-				
-layer1.drawLayer();
-					layer1.moveLayer();
-	
-								
 				class Stars {
 					var x;
 					var y;
@@ -150,7 +129,6 @@ layer1.drawLayer();
 					var b;
 					var w;
 					
-					
 					//constructor
 					Building(xPos,yPos,speed,width, height, color)
 					{
@@ -162,7 +140,6 @@ layer1.drawLayer();
 						g = color[1];
 						b = color[2];
 						w = width;
-						
 						
 					}
 					
@@ -176,32 +153,29 @@ layer1.drawLayer();
 						noStroke();
 						rect(x,y,w,h);
 							if (y>350) {
-								fill(0,153,0);
+								fill(255,215,0);
 								//left side
-								ellipse(200, 150, 90,90);
-								ellipse(200, 150, 90, 90);
+								rect(x+5,y+5,w/5,h/10);
+								rect(x+5,y+50,w/5,h/10);
+								rect(x+5,y+90,w/5,h/10);
 								//right side
-								fill(0,153,0);
-								ellipse(200, 150, 100, 100);
-								ellipse(200, 150, 90, 90);
+								fill(255,215,0);
+								rect(x+(w/2),y+5,w/5,h/10);
+								rect(x+(w/2),y+50,w/5,h/10);
+								rect(x+(w/2),y+90,w/5,h/10);
 							}
 							else {
 								fill(255,215,0);
-								// Left side
-								ellipse(200, 150, 100, 100);
-								ellipse(200, 150, 90, 90);
+								//left side
+								rect(x+5,y+5,w/6,h/20);
+								rect(x+5,y+40,w/6,h/20);
 								//middle
-								fill(255,215,0);
-								ellipse(200, 150, 100, 100);
-								ellipse(200, 150, 90, 90);
+								rect(x+(w/3),y+5,w/6,h/20);
+								rect(x+(w/3),y+40,w/6,h/20);
 								//right side
-								fill(255,215,0);
-								ellipse(200, 150, 100, 100);
-								ellipse(200, 150, 90, 90);
+								rect(x+(w-25),y+5,w/6,h/20);
+								rect(x+(w-45),y+5,w/6,h/20);
 							}
-							
-							
-							
 						
 					}
 				}
@@ -231,8 +205,8 @@ layer1.drawLayer();
 						
 						while (tw <= 500){
 							var bwidth = random(50,100);
-							var bheight = random(h-90,h+80);
-							buildings.push(new Building(tw,500-bheight,s,bwidth,bheight,[r,g,b]));
+							var bheight = random(h-90,h+90);
+							buildings.push(new Building(tw,600-bheight,s,bwidth,bheight,[r,g,b]));
 							tw = tw + bwidth;
 						
 						}
@@ -330,17 +304,16 @@ layer1.drawLayer();
 					
 					//method
 					void drawcatFood(){
-						//catfood
+						//cat food
 						fill(255, 0, 0);
 						rect(x,y,30,30,10);
 						
-					}
+						}
 						
-					void Move(){
+						void Move(){
 							x=x-5;
-					}
+						}
 				}
-				
 				class FoodLayer{
 					//attributes
 					var food=[];
@@ -354,12 +327,6 @@ layer1.drawLayer();
 						for (var i=0;i<food.length;i++){
 							food[i].Move();
 						}
-						if(food[food.length-1].x<500-space){	
-							space=Math.floor(Math.random() * (201)) + 100;
-							var height=Math.floor(Math.random()* (251)) + 251;
-							food.push(new catFood(500,height,30,30));
-						}
-							
 					}
 					void drawLayer(){
 						for(var i=0;i<food.length;i++){
@@ -368,7 +335,19 @@ layer1.drawLayer();
 								
 					}
 				}
-			
+						
+						
+					
+					
+					
+					
+					
+				
+					
+					
+				
+				
+				
 				class Yarn{
 					//attributes
 					var x;
@@ -386,17 +365,17 @@ layer1.drawLayer();
 					}
 					
 					//method
-					void drawyarn(){
+					void drawYarn(){
 						//yarn
 						fill(145,134,69);
-						ellipse(x,y,h,w);
+						ellipse(149,140,29,32);
+						line(150,127,143,156);
+						line(161,132,146,157);
+						line(138,129,150,157);
 						
-							
+						
+						
 					}
-					
-					void Move(){
-							x=x-1;
-						}
 
 					
 					
@@ -405,109 +384,12 @@ layer1.drawLayer();
 				}
 				
 				
-				class YarnLayer{
-					
-					//attributes
-					var yarn=[];
-					var space=Math.floor(Math.random() * (400)) + 350;
-					var height=Math.floor(Math.random() * (251)) + 250;
-					
-					YarnLayer(){
-						yarn.push(new Yarn(500,height,30,30));
-							
-					}
-					
-					void moveLayer(){
-						for (var i=0;i<yarn.length;i++){
-							console.log("moving");
-							yarn[i].Move();
-						}
-						if(yarn[yarn.length-1].x==500-space){
-							space=Math.floor(Math.random() * (400)) + 350;
-							var height=Math.floor(Math.random() * (251)) + 250;
-							yarn.push(new Yarn(500,height,29,32));
-						}
-					}
-					
-					void drawLayer(){
-						for(var i=0;i<yarn.length;i++){
-							yarn[i].drawyarn();
-						}
-								
-					}
-					
-				}
 				
-				class Man{
-					//attributes
-					var x;
-					var y;
-					var w;
-					var h;
-					
-					//constructor
-					Man(xPos,yPos,width,height){
-						x = xPos;
-						y = yPos;
-						w = width;
-						h = height;
-					}
-					
-					//method
-					void drawMan(){
-						fill(237,222,112);
-						ellipse(x,y+110,w+41,h+51);
-						fill(50,132,173);
-						ellipse(x,y+160,w+41,h+71);
-						fill(10,10,10);
-						rect(x-21,y+190,w+41,h+15);
-						fill(10,10,10);
-						ellipse(x-16,y+108,w,h);
-						fill(255,0,0);
-						rect(x-18,y+120,w+8,h+13);
-						fill(235,193,223);
-						rect(x-30,y+95,w+23,h+13);
-						ellipse(x,y+90,w+36,h+25);
-						
-					}
-					void move(){
-						x=x-1;
-					
-					}
-				}
+		
 				
-				 class Manlayer{
-				 //attributes
-					var man=[];
-					var space=Math.floor(Math.random() * (400)) + 350;
-					var height=Math.floor(Math.random() * (251)) + 250;
+			
 					
-					Manlayer(){
-						man.push(new Man(500,height,30,30));
-							
-					}
 					
-					void moveLayer(){
-						for (var i=0;i<man.length;i++){
-							console.log("moving");
-							man[i].move();
-						}
-						if(man[man.length-1].x==500-space){
-							space=Math.floor(Math.random() * (400)) + 350;
-							var height=Math.floor(Math.random() * (251)) + 250;
-							man.push(new Man(500,height,29,32));
-						}
-					}
-					
-					void drawLayer(){
-						for(var i=0;i<man.length;i++){
-							man[i].drawMan();
-						}
-								
-					}
-				} 
-				
-				
 						
 		</script>
 	<style type="text/css">@font-face {

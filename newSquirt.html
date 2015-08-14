@@ -9,14 +9,18 @@
 			//back layer
 			Layer layer1 = new Layer(3,200);
 			Grass forest = new Grass();
-			Holes ground = new Holes(100,200,1,1, 1);
+			Holes ground = new Holes(100,1000,1,1, 1);
 			LayerH layerh = new LayerH(3,1100);
 			Sun sky = new Sun();
 			Elephant elly = new Elephant(0,1050,1,1);
+<<<<<<< HEAD
 			//Peanut p = new Peanut(300, 700,0.5,100,100 );
 			
 			PeanutLayer pl = new PeanutLayer(0.5,500);
 			
+=======
+		
+>>>>>>> origin/master
 	
 			void setup(){
 				size(1200,1200);
@@ -37,12 +41,19 @@
 				layer1.drawLayer();
 				layer1.moveLayer();
 				
-				//grass layer - green rect
-				forest.drawGrass();
-				
 				//layer of holes			
 				layerh.drawLayer();
 				layerh.moveLayer();
+				
+				//grass layer - green rect
+				forest.drawGrass();
+				
+				//holes
+				ground.drawHoles();
+				ground.moveHoles();
+				
+				
+				
 				
 				//layer of sun
 				sky.drawSun();
@@ -205,7 +216,7 @@
 				 void drawGrass()
 				 {
 					fill(131,151,13);
-					rect(0,1100,1200,100);
+					rect(0,1100,1200,200);
 				 
 				 }
 			
@@ -304,7 +315,7 @@
 					//constructor
 					Holes (xPos,yPos,width,height,speed)
 					{
-						console.log(typeof xPos);
+						//console.log(typeof xPos);
 						x = xPos;
 						y = yPos;
 						w = width;
@@ -330,7 +341,7 @@
 					
 					void moveHoles()
 					{
-						x = x - s;
+						x = x + s;
 					}
 				}
 				
@@ -354,7 +365,7 @@
 						width = 0;
 						
 						console.log("I AM HERE!!!!");
-						while(width <=1200) 
+						while(width >=1200) 
 						{
 							//hole width
 							var hwidth = random(50,100);
@@ -363,10 +374,11 @@
 							var hheight = 200;
 							console.log(hheight);
 							
-							holes.push(new Holes(random(50,500),1200-hheight,hwidth,hheight,1));
+							holes.push(new Holes(random(0,100),1000,1,1,1));
+							
 							console.log(holes.length);
 							
-							width = width + 100 + hwidth;
+							width = width + hwidth;
 						}
 					}
 					
@@ -393,8 +405,8 @@
 							console.log("Hi");
 							var hwidth = random(50,100);
 							var hheight = 900;
-							holes.push(new Holes(width,1200-hheight,hwidth,hheight, s));
-							width = width + 100;
+							holes.push(new Holes(random(0,100),100,1,1,1));
+							//width = width + 100;
 							width = width + hwidth;
 						}
 					}
