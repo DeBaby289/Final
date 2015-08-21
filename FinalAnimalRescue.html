@@ -1,0 +1,574 @@
+
+<!-- saved from url=(0064)file:///C:/Users/zion/Downloads/ZionJenniCityScroller%20(1).html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+			<script src="processing-1.4.1.js"></script>
+			<script type="text/processing" data-processing-target="mycanvas">
+				FoodLayer foodlayer;
+				var food=[];
+				var man=[];
+				var score=0;
+				var life= 9;
+				var yarn=[];
+				
+				void setup()
+				{
+				  size(500,600);
+				  background(150,200,180);
+				  fill(255,100,100);
+				 
+				  //noLoop();
+				 
+				  
+				  //back layer
+				  layer1 = new Layer(.2,350,20,20,20);
+				  //front layer
+				  layer2 = new Layer(4,150,10,40,35);
+				  //middle layer
+				  layer3 = new Layer(1.5,230,0,0,0);
+				  //nightSky = new Stars(random(3,498),random(5,200),8,8,[255,215,0],0)
+				  nightsky = new StarLayer();
+				  beep = new Cat(150,585,30,12);
+				  //cat = new catFood(500,420,30,30);
+				  foodlayer = new FoodLayer();
+				  yarnLayer = new YarnLayer();
+				  Manlayer = new Manlayer();
+				  
+				 
+				}
+				void draw(){
+					background(0,0,0);
+					//nightSky.drawStars();
+					nightsky.drawStar();
+					layer1.drawLayer();
+					layer1.moveLayer();
+					layer3.drawLayer();
+					layer3.moveLayer();
+					layer2.drawLayer();
+					layer2.moveLayer();
+					beep.drawCat();
+					//cat.drawcatFood();
+					//cat.Move();
+					sensor();
+					updateLife();
+					
+					Manlayer.drawLayer();
+					Manlayer.moveLayer();
+					yarnLayer.drawLayer();
+					yarnLayer.moveLayer();
+					foodlayer.drawLayer();
+					foodlayer.moveLayer();
+					if(keyPressed==true){
+						if(keyCode==38){
+							console.log("up");
+							if(beep.y>200){
+								beep.jump();
+							}
+						
+							
+						}
+						console.log(keyCode);
+					
+					}
+					
+					if (keyPressed==false){
+						if (beep.y<590){
+							console.log("down");
+							beep.fall();
+						}
+					}
+					
+					if (score==5000){
+							alert("Winner!!");
+					}
+				
+				}
+				
+				function sensor(){
+					for (var i=0;i<food.length;i++){
+						if (beep.x > food[i].x-50 && beep.x < food[i].x+10){
+							if (beep.y>food[i].y-50 && beep.y<food[i].y+70){
+								
+								food[i].x=-300;
+								food[i].y=800;
+								//alert("Touching");
+								updateScore();
+							}
+						}
+					}				
+				}
+				
+				function updateScore(){
+					score=score+25;
+					//alert("Score: "+ score);
+					document.getElementById("score").innerHTML="Score" + score;	
+				}
+				
+				function updateLife(){
+					for (var i=0;i<yarn.length;i++)
+					{
+						if (beep.x > yarn[i].x-10 && beep.x < yarn[i].x+10)
+						{
+							if (beep.y>yarn[i].y-10 && beep.y<yarn[i].y+10)
+							{
+								
+								yarn[i].x=-300;
+								yarn[i].y=800;
+								//alert("Lives remaining:" + life);
+								
+								if(life<9)
+								{
+									life=life+1;
+								}
+								else
+								{
+									life=9;
+								}
+							}
+						}
+					}
+					
+					for (var i=0;i<man.length;i++){
+						
+						if (beep.x > man[i].x-50 && beep.x < man[i].x+10)
+						{
+							if (beep.y>man[i].y-30 && beep.y<man[i].y+420)
+							{
+								man[i].x=-300;
+								man[i].y=800;
+								life=life-1;
+								//alert("Lives: " +  life);
+							}
+						}
+					}
+					
+					if (life==0){
+						alert("Game Over Sucker!!");
+						
+					}
+					document.getElementById("life").innerHTML="Life" + life;
+				}
+				
+				
+				
+				class Stars {
+					var x;
+					var y;
+					var w;
+					var h;
+					var c;
+					var stars;
+					var s;
+					
+					//constructor
+					Stars(xPos, yPos, width, height,color)
+					{
+					x = xPos;
+					y = yPos;
+					w = width;
+					h = height;
+					c = color;
+					//stars = [];
+					//s = speed;
+					
+						//stars.push(new Stars();
+					}
+					
+					//methods					
+					void drawStars(){
+						fill(c[0], c[1],c[2]);
+						ellipse(x,y,w,h);
+						
+					}
+					
+				}
+				
+				class StarLayer {
+					//attributes
+					var stars = [];
+					
+					//constructor
+					StarLayer(){
+						for (var count=0;count<31;count++){
+							stars.push(new Stars(random(3,498),random(5,300),8,8,[255,215,0]));
+						}
+					}
+					//methods
+					void drawStar(){
+						for (var count=0;count<stars.length;count++){
+							stars[count].drawStars();
+						}
+					}
+				}
+				
+				
+				class Building {
+					//attributes
+					var x;
+					var y;
+					var s;
+					var h;
+					var r;
+					var g;
+					var b;
+					var w;
+					
+					//constructor
+					Building(xPos,yPos,speed,width, height, color)
+					{
+						x = xPos;
+						y = yPos;
+						s = speed;
+						h = height;
+						r = color[0];
+						g = color[1];
+						b = color[2];
+						w = width;
+						
+					}
+					
+					//methods
+					void moveBuilding(){
+						x = x - s;
+					}
+						
+					void drawBuilding(){
+						fill(r,g,b);
+						noStroke();
+						rect(x,y,w,h);
+							if (y>350) {
+								fill(255,215,0);
+								//left side
+								rect(x+5,y+5,w/5,h/10);
+								rect(x+5,y+50,w/5,h/10);
+								rect(x+5,y+90,w/5,h/10);
+								//right side
+								fill(255,215,0);
+								rect(x+(w/2),y+5,w/5,h/10);
+								rect(x+(w/2),y+50,w/5,h/10);
+								rect(x+(w/2),y+90,w/5,h/10);
+							}
+							else {
+								fill(255,215,0);
+								//left side
+								rect(x+5,y+5,w/6,h/20);
+								rect(x+5,y+40,w/6,h/20);
+								//middle
+								rect(x+(w/3),y+5,w/6,h/20);
+								rect(x+(w/3),y+40,w/6,h/20);
+								//right side
+								rect(x+(w-25),y+5,w/6,h/20);
+								rect(x+(w-45),y+5,w/6,h/20);
+							}
+						
+					}
+				}
+					
+				
+				
+				class Layer {
+					//attributes
+					var s;
+					var h;
+					var r;
+					var g;
+					var b;
+					var buildings;
+					var tw;
+					
+					//constructor
+					Layer(speed, height, red, green, blue)
+					{
+						s = speed;
+						h = height;
+						r = red;
+						g = green;
+						b = blue;
+						buildings =[];
+						tw = 0;
+						
+						while (tw <= 500){
+							var bwidth = random(50,100);
+							var bheight = random(h-90,h+90);
+							buildings.push(new Building(tw,600-bheight,s,bwidth,bheight,[r,g,b]));
+							tw = tw + bwidth;
+						
+						}
+						
+						}
+					
+					//methods
+					void moveLayer(){
+						for (var count=0;count<buildings.length;count++)
+						{
+							buildings[count].moveBuilding();
+						}
+						tw = tw - s;
+						if(tw<600){
+							var bwidth = random(50,100);
+							var bheight = random(h-90,h+90);
+							buildings.push(new Building(tw,600-bheight,s,bwidth,bheight,[r,g,b]));
+							tw = tw + bwidth;
+						}
+					}	
+					
+					
+					void drawLayer(){
+						for (var count=0;count<buildings.length;count++)
+						{
+							buildings[count].drawBuilding();
+						}
+					}
+					 
+				}
+			
+				class Cat {
+					//attributes
+					var x;
+					var y;
+					var w;
+					var h;
+					
+					//conductor
+					Cat(xPos,yPos,width,height){
+						x = xPos;
+						y = yPos;
+						w = width;
+						h = height;
+					}
+					//methods
+						void drawCat(){
+							fill(120, 107, 107);
+							ellipse(x,y-35,35,25);
+							ellipse(x-30,y-25,50,35);
+							//left leg
+							rect(x-50,y-15,4,20);
+							//right leg
+							rect(x-20,y-15,4,20);
+							//tail 
+							rect(x-55,y-55,4,30);
+							//ear
+							triangle(x,y-45, 135, y-45, 139,y-65);
+							triangle(x+20,y-45,154,y-45,170,y-65);
+							//left eye
+							fill(67, 154, 204);
+							ellipse(x-5,y-40,5,10);
+							//right eye
+							fill(67, 154, 204);
+							ellipse(x+10,y-40,5,10);
+							//mouth 
+							fill(242, 109, 160);
+							ellipse(x+5,y-35,8,5);
+						}
+						
+						void jump(){
+							y=y-10;
+							console.log("jumped");
+						}
+						void fall(){
+						y=y+10;
+						console.log("fall");
+						}
+				}
+					
+				class catFood{
+					//attributes
+					var x;
+					var y;
+					var h;
+					var w;
+					
+					//constructor
+					catFood(xPos,yPos,height,width){
+						x = xPos;
+						y = yPos;
+						h = height;
+						w = width;
+					}
+					
+					//method
+					void drawcatFood(){
+						//cat food
+						fill(255, 0, 0);
+						rect(x,y,30,30,10);
+						
+						}
+						
+						void move(){
+							x=x-5;
+						}
+				}
+				class FoodLayer{
+					//attributes
+					var space=Math.floor(Math.random() * (201)) + 100;
+					var height=Math.floor(Math.random() * (251)) + 250;
+					
+					FoodLayer(){
+						food.push(new catFood(500,height,30,30));
+					}
+					void moveLayer(){
+						for (var i=0;i<food.length;i++){
+							food[i].move();
+						}
+						if(food[food.length-1].x<500-space){	
+							space=Math.floor(Math.random() * (201)) + 100;
+							var height=Math.floor(Math.random()* (251)) + 251;
+							food.push(new catFood(500,height,30,30));
+						}
+					}
+					void drawLayer(){
+						for(var i=0;i<food.length;i++){
+							food[i].drawcatFood();
+						}
+								
+					}
+				}
+						
+						
+					
+				class Yarn{
+					//attributes
+					var x;
+					var y;
+					var h;
+					var w;
+					
+					//constructor
+					Yarn(xPos,yPos,height,width){
+						x = xPos;
+						y = yPos;
+						h = height;
+						w = width;
+							
+					}
+					
+					//method
+					void drawyarn(){
+						//yarn
+						fill(145,134,69);
+						ellipse(x,y,h,w);
+						
+							
+					}
+					
+					void move(){
+							x=x-1;
+						}
+
+					
+					
+					
+					
+				}
+				
+				
+				class YarnLayer{
+					//attributes
+					var space=Math.floor(Math.random() * (400)) + 350;
+					var height=Math.floor(Math.random() * (251)) + 250;
+					
+					YarnLayer(){
+						yarn.push(new Yarn(500,height,30,30));
+							
+					}
+					
+					void moveLayer(){
+						for (var i=0;i<yarn.length;i++){
+							console.log("moving");
+							yarn[i].move();
+						}
+						if(yarn[yarn.length-1].x<500-space){
+							space=Math.floor(Math.random() * (201)) + 100;
+							var height=Math.floor(Math.random()* (251)) + 251;
+							yarn.push(new Yarn(500,height,29,32));
+						}
+					}
+					
+					void drawLayer(){
+						for(var i=0;i<yarn.length;i++){
+							yarn[i].drawyarn();
+						}
+								
+					}
+					
+				}
+				
+				class Man{
+					//attributes
+					var x;
+					var y;
+					var w;
+					var h;
+					
+					//constructor
+					Man(xPos,yPos,width,height){
+						x = xPos;
+						y = yPos;
+						w = width;
+						h = height;
+					}
+					
+					//method
+					void drawMan(){
+						fill(237,222,112);
+						ellipse(x,510,44,41);
+						fill(50,132,173);
+						ellipse(x,560,44,61);
+						fill(10,10,10);
+						rect(x-21,590,44,5);
+						fill(10,10,10);
+						ellipse(x-16,508,3,-10);
+						fill(255,0,0);
+						rect(x-18,520,11,3);
+						fill(235,193,223);
+						rect(x-30,495,26,3);
+						ellipse(x,490,39,15);
+						
+					}
+					void move(){
+						x=x-1;
+					
+					}
+				}
+				
+				 class Manlayer{
+				 //attributes
+				
+					var space=Math.floor(Math.random() * (400)) + 350;
+					var height=Math.floor(Math.random() * (250)) + 250;
+					
+					Manlayer(){
+						man.push(new Man(500,height,30,30));
+							
+					}
+					
+					void moveLayer(){
+						for (var i=0;i<man.length;i++){
+							console.log("moving");
+							man[i].move();
+						}
+						if(man[man.length-1].x<500-space){
+							space=Math.floor(Math.random() * (400)) + 350;
+							man.push(new Man(500,height,29,32));
+						}
+					}
+					
+					void drawLayer(){
+						for(var i=0;i<man.length;i++){
+							man[i].drawMan();
+						}
+								
+					}
+				} 
+				
+		</script>
+	<style type="text/css">@font-face {
+  font-family: "PjsEmptyFont";
+  src: url('data:application/x-font-ttf;base64,AAEAAAAKAIAAAwAgT1MvMgAAAAAAAAEoAAAAVmNtYXAAAAAAAAABiAAAACxnbHlmAAAAAAAAAbwAAAAkaGVhZAAAAAAAAACsAAAAOGhoZWEAAAAAAAAA5AAAACRobXR4AAAAAAAAAYAAAAAGbG9jYQAAAAAAAAG0AAAABm1heHAAAAAAAAABCAAAACBuYW1lAAAAAAAAAeAAAAAgcG9zdAAAAAAAAAIAAAAAEAABAAAAAQAAAkgTY18PPPUACwAgAAAAALSRooAAAAAAyld0xgAAAAAAAQABAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEAAAACAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAIwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAMAAQAAAAwABAAgAAAABAAEAAEAAABB//8AAABB////wAABAAAAAAAAAAgAEgAAAAEAAAAAAAAAAAAAAAAxAAABAAAAAAABAAEAAQAAMTcBAQAAAAAAAgAeAAMAAQQJAAEAAAAAAAMAAQQJAAIAAgAAAAAAAQAAAAAAAAAAAAAAAAAA')
+       format('truetype');
+}</style></head>
+	<body>
+	<div id="score">score</div>
+	<div id="life">life</div>
+		<canvas id="mycanvas" tabindex="0" width="500" height="600" style="image-rendering: -webkit-optimize-contrast !important;"></canvas>
+	
+<span style="position: absolute; top: 0px; left: 0px; opacity: 0; font-family: PjsEmptyFont, fantasy;">AAAAAAAA</span></body></html>

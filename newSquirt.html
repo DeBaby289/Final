@@ -9,18 +9,29 @@
 			//back layer
 			Layer layer1 = new Layer(3,200);
 			Grass forest = new Grass();
-			Holes ground = new Holes(100,1000,1,1, 1);
-			LayerH layerh = new LayerH(3,1100);
+			//Holes ground = new Holes(100,1000,1,1, 1);
+			//LayerH layerh = new LayerH(3,1100);
 			Sun sky = new Sun();
 			Elephant elly = new Elephant(0,1050,1,1);
-<<<<<<< HEAD
+			
+			//Clown biggie = new Clown(100,1300,.5,100);
+			//HEAD
 			//Peanut p = new Peanut(300, 700,0.5,100,100 );
 			
 			PeanutLayer pl = new PeanutLayer(0.5,500);
+			var score = 0;
 			
-=======
+			ClownLayer shorty = new ClownLayer();
+			var death = 3;
+			/*var test = [0,1,2,3,4];
+			for(var i =0; i<test.length; i++){
+				alert(test[i]);
+				
+			} */
 		
->>>>>>> origin/master
+
+		
+			//origin/master
 	
 			void setup(){
 				size(1200,1200);
@@ -28,10 +39,8 @@
 				fill(255);
 				PFont fontA = loadFont("courier");
 				textFont(fontA, 14);  
-					
 			}
-					
-					
+						
 			void draw(){
 				background(126,192,238);
 				fill(82, 41, 0);
@@ -42,16 +51,19 @@
 				layer1.moveLayer();
 				
 				//layer of holes			
-				layerh.drawLayer();
-				layerh.moveLayer();
+				//layerh.drawLayer();
+				//layerh.moveLayer();
 				
 				//grass layer - green rect
 				forest.drawGrass();
 				
 				//holes
-				ground.drawHoles();
-				ground.moveHoles();
+				//ground.drawHoles();
+				//ground.moveHoles();
 				
+				//Clown
+				shorty.drawLayer();
+				shorty.moveLayer();
 				
 				
 				
@@ -66,7 +78,48 @@
 				pl.drawpeanutlayer();
 				pl.movepeanutlayer();
 				
+				if(keyPressed==true){
+						if(keyCode==38){
+							//console.log("up");
+							if(elly.y>200){
+								elly.jump();
+							}
+						
+							
+						}
+						//console.log(keyCode);
+					
+				}
+				if (keyPressed==false){
+					if (elly.y<1050){
+						//console.log("down");
+						elly.fall();
+					}
+				}
+					
+				for(var a=0; a<shorty.clown.length;a++){
+					if(shorty.clown[a].touchedElephant(elly.x,elly.y)){
+						console.log("touching elly");
+						elly.disappear();
+						death = death - 1;
+						console.log("You died");
+						document.getElementById("die").innerHTML= death;
+						if(death == 0){
+							alert("You died!!!!!!");
+							stopAll();
+						}
+					}
+				}
 				
+				var peanut=pl.peanut
+				for(var i=0; i<peanut.length;i++){
+					if(elly.touchedPeanut(peanut[i].x,peanut[i].y)){
+						peanut[i].disappear();
+						score = score + 2;
+						console.log("2 Points");
+						document.getElementById("score").innerHTML= score;
+					}
+				}
 			}
 
 		
@@ -163,11 +216,11 @@
 					while(width <=1200) 
 					{
 						var twidth = random(100,400);
-						console.log(twidth);
+						//console.log(twidth);
 						var theight = 200;
-						console.log(theight);
+						//console.log(theight);
 						trees.push(new Tree(random(50,500),1200-theight,0.5,twidth,theight));
-						console.log(trees.length);
+						//console.log(trees.length);
 						width = width + twidth;
 
 					
@@ -188,14 +241,14 @@
 				{
 					for (var count=0;count<trees.length;count++)
 						{
-							console.log("Ho");
+							//console.log("Ho");
 							trees[count].moveTree();
 						}
 						width = width - s;
 						
 						if(width<1200)
 						{
-							console.log("Hi");
+							//console.log("Hi");
 							var twidth = random(40,80);
 							var theight = random(h-90,h+90);
 							trees.push(new Tree(width,1200-theight,s,twidth,theight));
@@ -222,6 +275,99 @@
 			
 			}
 				
+			class Clown{
+				//atttributes
+				var x;
+				var y;
+				var spdX;
+				var spdY;
+				//constructor
+				Clown(xPos,yPos,sX,sY){
+					x = xPos;
+					y = yPos;
+					spdX = sX;
+					spdX = sY;
+				}
+				//methods
+				void drawClown()
+				{
+					//console.log("drawclown");
+					fill(9,243,25);
+					strokeWeight(10);
+					fill(9,80,243);
+					rect(x+505,y-353,54,217);
+					rect(x+607,y-362,54,217);
+					arc(x+636,y-362,80,80,0,360);
+					arc(x+531,y-362,80,80,0,360);
+					fill(255,3,3);
+					ellipse(x+582,y-245,93,260);
+					strokeWeight(5);
+					fill(255,255,255);
+					ellipse(x+580,y-436,149,143);
+					fill(9,80,243);
+					triangle(x+582,y-573,x+678, y-464,x+484,y-464);
+					fill(0,0,0);
+					ellipse(x+620,y-445,20,20);
+					ellipse(x+550,y-445,20,20);
+					fill(255,7,7);
+					arc(x+585,y-414,20,20,0,360);
+					arc(x+582,y-399,58,58,720,898);
+					ellipse(x+621,y-446,10,10);
+					ellipse(x+550,y-444,10,10);
+					fill(255,255,0);
+					ellipse(x+603,y-321,23,23);
+					ellipse(x+560,y-342,23,23);
+					ellipse(x+555,y-301,23,23);
+					ellipse(x+603,y-277,23,23);
+					ellipse(x+554,y-256,23,23);
+					ellipse(x+602,y-233,23,23);
+				
+				}
+				void moveClown(){
+					x = x - 3;
+					
+				}
+				boolean touchedElephant(ellyx, ellyy){
+					if(x+500>ellyx-70 && y-400< ellyy+70 && x+500<ellyx+70 && y-200>ellyy-70){
+						console.log("kitty");
+						return true;
+					}
+					else{
+						return false;
+					}	
+				}
+			}
+				
+				class ClownLayer{
+				 //attributes
+					var clown=[];
+					var space=Math.floor(Math.random() * (500)) + 550;
+					//var height=Math.floor(Math.random() * (250)) + 250;
+					
+					ClownLayer(){
+						clown.push(new Clown(1000,1300,.5,100));
+							
+					}
+					
+					void moveLayer(){
+						for (var i=0;i<clown.length;i++){
+							//console.log("moving");
+							clown[i].moveClown();
+						}
+						if(clown[clown.length-1].x<1200-space){
+							space=1000;//Math.floor(Math.random() * (400)) + 350;
+							clown.push(new Clown(1000,1300,.5,100));
+						}
+					}
+					
+					void drawLayer(){
+						for(var i=0;i<clown.length;i++){
+							clown[i].drawClown();
+						}
+								
+					}
+				
+				} 
 				
 				class Elephant
 				{
@@ -230,9 +376,6 @@
 					var y;
 					var spdX;
 					var spdY;
-					//var start;
-					//var stop;
-					
 					//constructor
 					Elephant(xPos,yPos,sX,sY)
 					{
@@ -240,67 +383,61 @@
 						y = yPos;
 						spdX = sX;
 						spdY = sY;
-						//start = str;
-						//stop = stp;
-					
 					}
-				
 					//methods
 					void drawElephant()
 					{
-						//body
-						fill(147,147,147);
-						ellipse(x+101,y+4,181,181);
-						
 						//head
 						fill(147,147,147);
-						ellipse(x,y,97,96);
+						ellipse(x,y,181,101);
 						
+						//body
+						ellipse(x+106,y-4,100,100);
+					
 						//leg#1
-						fill(147,147,147);
-						rect(x+34,y+40,23,50);
+						rect(x+10,y+30,31,61);
 
 						//leg#2
-						fill(147,147,147);
-						rect(x+133,y+40,23,50);
+						rect(x+20,y+41,23,50);
 
 						//leg#3
-						fill(147,147,147);
-						rect(x+49,y+40,23,50);
+						rect(x+30,y+41,23,50);
 
 						//leg#4
-						fill(147,147,147);
-						rect(x+149,y+40,23,50);
-
-						//left eye
-						fill(255,255,255);
-						ellipse(x-27,y-11,18,18);
-
-						//right eye
-						fill(255,255,255);
-						ellipse(x+29,y-11,18,18);
+						rect(x+40,y+29,23,62);
 
 						//right ear
-						fill(147,147,147);
-						arc(x+43,y-29,66,64,106,319);
-
+						
+						ellipse(x+80,y-70,80,80);
+						
 						//left ear
-						fill(147,147,147);
-						arc(x-44,y-27,66,64,106,319);
+						(x+90,y-80,60,60);
 
-						//tail
-						strokeWeight(6);
-						fill(147,147,147);
-						line(x+188,y-5,300,250);
+					}
+
+					void jump(){
+						y=y-10;
+						//console.log("jumped");
+					}
+					
+					void fall(){
+						y=y+10;
+						//console.log("fall");
+					}
 						
-						//inside right ear
-						//fill(255,153,153);
-						//ellipse(x+43,y-29);
+					boolean touchedPeanut(peanutx, peanuty){
+						if(x+150>peanutx-70 && y < peanuty+70 && x+150<peanutx+70 && y>peanuty-70){
+							return true;
+						}
+						else{
+							return false;
+						}
 						
-						//inside left ear
-						//fill(255,153,153);
-						//ellipse(x-44);
-					}	
+					
+					}
+					void disappear(){
+						y = y - 2000;
+					}
 				}
 				
 				class Holes
@@ -326,7 +463,7 @@
 					//methods
 					void drawHoles()
 					{
-						fill(102,51,0);
+						fill(0,0,0);
 						
 						//holes
 						ellipse(x+200,y+200, 50, 50);
@@ -345,8 +482,6 @@
 					}
 				}
 				
-				
-				
 				class LayerH
 				{
 					//attributes
@@ -364,19 +499,19 @@
 						holes =[];
 						width = 0;
 						
-						console.log("I AM HERE!!!!");
+						//console.log("I AM HERE!!!!");
 						while(width >=1200) 
 						{
 							//hole width
 							var hwidth = random(50,100);
-							console.log(hwidth);
+							//console.log(hwidth);
 							//hole height
 							var hheight = 200;
-							console.log(hheight);
+							//console.log(hheight);
 							
 							holes.push(new Holes(random(0,100),1000,1,1,1));
 							
-							console.log(holes.length);
+							//console.log(holes.length);
 							
 							width = width + hwidth;
 						}
@@ -396,14 +531,14 @@
 					{
 						for (var count=0; count<holes.length; count++)
 						{
-							console.log("Ho");
+							//console.log("Ho");
 							holes[count].moveHoles();
 						}
 						width = width - s;
 						if (width<1200)
 						{
-							console.log("Hi");
-							var hwidth = random(50,100);
+							//console.log("Hi");
+							var hwidth = random(300,400);
 							var hheight = 900;
 							holes.push(new Holes(random(0,100),100,1,1,1));
 							//width = width + 100;
@@ -429,7 +564,6 @@
 					}
 			
 				}
-				
 				
 				class Peanut{
 				//attributes 
@@ -459,21 +593,21 @@
 				}
 				void movePeanut(){
 					x = x - spdX;
-					
 				}
 					
 				//methods
 				void drawPeanut()
 				{    
 					//Peanut
-					fill(0,0,255);
+					fill(214,145,17);
 					noStroke();
 					
 					ellipse(x,y,width,height);
 					ellipse(x,y,width,height);
 					ellipse(x,y,width,height);
-					
-
+				}
+				void disappear(){
+					y = y - 20000;
 				}
 			}
 			
@@ -499,14 +633,14 @@
 					peanut = [];
 					xLoc = width;
 					
-					while(width <=1200) {
-						var nutW = random(50,100);
-						console.log("nut");
-						var nutH = 450;
-						console.log("nutty");
-						peanut.push(new Peanut(xLoc,300,0.5,nutW,nutH));
-						console.log(peanut.length);
-						width = width + nutW;
+					while(width <=900) {
+						var nutW = random(30,50);
+						//console.log("nut");
+						var nutH = 35;
+						//console.log("nutty");
+						peanut.push(new Peanut(xLoc,300,speed,nutW,nutH));
+						//console.log(peanut.length);
+						width = width + nutW + 200;
 						xLoc = width;
 						}
 				}
@@ -525,25 +659,23 @@
 				{
 					for(var count=0;count<peanut.length;count++)
 					{
-						console.log("Hey");
+						//console.log("Hey");
 						peanut[count].movePeanut();
 					}
 					width = width - speed;
 					
 					if(width<1200)
 					{
-						console.log("Hey");
-						var nut = random(50,100); // nut's width 
-						var nutty = random(height-90,height+90); // nut's height
+						//console.log("Hey");
+						var nut = random(30,50); // nut's width 
+						var nutty = 35; // nut's height
 						peanut.push(new Peanut(xLoc,300,speed,nut,nutty));
-						width = width + nut;
+						width = width + nut + 200;
 						xLoc = width;
 						
 					}
 					
 				}
-				
-				
 			}
 					
 					
@@ -561,6 +693,12 @@
 </style>
 </head>
 	<body>
+		<div id = "score">Score</div>
+		<div id = "die">Number of Points</div>
 		<canvas id="mycanvas" tabindex="0" width="500" height="600" style="image-rendering: -webkit-optimize-contrast !important;"></canvas>
+		
+<audio controls autoplay>
+  <source src="Love Tonight.mp4" type="audio/mp4">
+</audio>
 	
 <span style="position: absolute; top: 0px; left: 0px; opacity: 0; font-family: PjsEmptyFont, fantasy;">AAAAAAAA</span></body></html>
